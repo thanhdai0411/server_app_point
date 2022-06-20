@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const {
+    ModelBuildInstance,
+} = require('twilio/lib/rest/autopilot/v1/assistant/modelBuild');
 
 const { Schema } = mongoose;
 
@@ -10,9 +13,11 @@ const productSchema = new Schema(
         },
         price: {
             type: String,
+            required: true,
         },
         thumbnail: {
             type: String,
+            required: true,
         },
         description: {
             type: String,
@@ -23,9 +28,8 @@ const productSchema = new Schema(
         deleted: {
             type: Number,
         },
-        discount_id: {
-            type: Schema.Types.ObjectId,
-            ref: 'Discount',
+        discount: {
+            type: String,
         },
         category_id: {
             type: Schema.Types.ObjectId,
@@ -36,3 +40,5 @@ const productSchema = new Schema(
 );
 
 const Product = mongoose.model('Product', productSchema);
+
+module.exports = Product;
