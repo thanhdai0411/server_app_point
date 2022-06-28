@@ -12,20 +12,18 @@ const userSchema = new Schema(
         email: {
             type: String,
             require: true,
+            unique: true,
         },
         address: {
             type: String,
-            require: true,
         },
         phone_number: {
             type: String,
-            require: true,
         },
         password: {
             type: String,
             require: true,
         },
-        number_point: { type: Number },
         info_bank: { type: String },
         discount_id: {
             type: Schema.Types.ObjectId,
@@ -39,6 +37,12 @@ const userSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Rank',
         },
+        points: [
+            {
+                type: String,
+                ref: 'Point',
+            },
+        ],
         deleted: {
             type: Number,
             default: 0,
@@ -48,3 +52,5 @@ const userSchema = new Schema(
 );
 
 const User = mongoose.model('User', userSchema);
+
+module.exports = User;

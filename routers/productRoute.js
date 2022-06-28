@@ -7,12 +7,10 @@ const {
     updateProduct,
 } = require('../controller/productController');
 
-router.post('/product/add', addProduct);
-router.get('/product/get_all', getAllProduct);
-router.get('/product/get_detail/:id', getDetailProduct);
-router.delete('/product/delete/:id', deleteProduct);
-router.put('/product/update/:id', updateProduct);
-
-
+router.post('/add', addProduct);
+router.get('/get_all', getAllProduct);
+router.get('/get_detail/:id', getDetailProduct);
+router.delete('/delete/:id', deleteProduct);
+router.put('/update/:id', updateProduct);
 
 module.exports = router;

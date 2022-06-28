@@ -6,6 +6,8 @@ const dotenv = require('dotenv');
 const app = express();
 const port = process.env.PORT || 8889;
 
+app.use(cors());
+
 //! import
 const routerConfig = require('./routers');
 const connectMongGoDB = require('./config/db');
@@ -14,7 +16,6 @@ const connectMongGoDB = require('./config/db');
 dotenv.config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 
 //! connect mongodb
 connectMongGoDB();
