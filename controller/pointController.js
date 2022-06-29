@@ -3,8 +3,15 @@ const User = require('../model/User');
 
 const pointController = {
     addPoints: async (req, res) => {
-        const { userID } = req.body;
+        const { userID, code_scanner } = req.body;
         try {
+            const exitsPoint = await Point.findOne({ code_scanner });
+            if (exitsPoint) {
+                return res.json({
+                    success: false,
+                    message: 'Code scanner already exist',
+                });
+            }
             const newPoint = new Point(req.body);
             const savePoint = await newPoint.save();
 
@@ -12,6 +19,7 @@ const pointController = {
                 const user = User.findOne({ _id: userID });
                 await user.updateOne({ $push: { points: savePoint.code_scanner } });
             }
+
             res.json({ success: true, data: savePoint });
         } catch (err) {
             res.status(500).json({ success: false, message: 'Internal Server Error' });
@@ -34,6 +42,7 @@ const pointController = {
     },
     deleteAllPoint: async (req, res) => {
         try {
+            await User.updateMany({ _id: req.params.id }, { points: [] });
             await Point.remove();
             res.json({ success: true, message: 'Delete all collection point' });
         } catch (err) {

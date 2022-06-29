@@ -8,6 +8,6 @@ const {
 router.get('/get', getPoints);
 router.post('/add', addPoints);
 router.get('/get_all', getAllPoint);
-router.delete('/delete_all', deleteAllPoint);
+router.delete('/delete_all/:id', deleteAllPoint);
 
 module.exports = router;
