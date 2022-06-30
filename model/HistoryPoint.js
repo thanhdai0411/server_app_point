@@ -4,14 +4,17 @@ const { Schema } = mongoose;
 
 const historyPointSchema = new Schema(
     {
-        number_points: {
+        number_point: {
             type: Number,
             required: true,
         },
-        exchange_points: {
+        exchange_point: {
             type: Number,
         },
-        accumulate_points: {
+        accumulate_point: {
+            type: Number,
+        },
+        donate_points: {
             type: Number,
         },
         user_id: {
@@ -23,3 +26,4 @@ const historyPointSchema = new Schema(
 );
 
 const HistoryPoint = mongoose.model('HistoryPoint', historyPointSchema);
+module.exports = HistoryPoint;

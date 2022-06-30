@@ -16,6 +16,8 @@ const userSchema = new Schema(
         },
         address: {
             type: String,
+            unique: true,
+            required: true,
         },
         phone_number: {
             type: String,
@@ -24,7 +26,20 @@ const userSchema = new Schema(
             type: String,
             require: true,
         },
+
+        presenter: {
+            type: String,
+        },
+
         info_bank: { type: String },
+        number_point: {
+            type: Number,
+            default: 0,
+        },
+        number_point_introduce: {
+            type: Number,
+            default: 0,
+        },
         discount_id: {
             type: Schema.Types.ObjectId,
             ref: 'Discount',
@@ -37,9 +52,16 @@ const userSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Rank',
         },
+
         points: [
             {
                 type: String,
+                ref: 'Point',
+            },
+        ],
+        history_point: [
+            {
+                type: Schema.Types.ObjectId,
                 ref: 'Point',
             },
         ],

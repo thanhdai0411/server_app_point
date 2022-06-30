@@ -1,5 +1,6 @@
 const Point = require('../model/Points');
 const User = require('../model/User');
+const HistoryPoint = require('../model/HistoryPoint');
 
 const pointController = {
     addPoints: async (req, res) => {
@@ -12,9 +13,11 @@ const pointController = {
                     message: 'Code scanner already exist',
                 });
             }
+
             const newPoint = new Point(req.body);
             const savePoint = await newPoint.save();
 
+            // update user
             if (userID) {
                 const user = User.findOne({ _id: userID });
                 await user.updateOne({ $push: { points: savePoint.code_scanner } });
@@ -25,6 +28,7 @@ const pointController = {
             res.status(500).json({ success: false, message: 'Internal Server Error' });
         }
     },
+
     getPoints: async (req, res) => {
         try {
             // const point

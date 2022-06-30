@@ -5,6 +5,7 @@ const {
     deleteAllPoint,
     getAllPoint,
 } = require('../controller/pointController');
+
 router.get('/get', getPoints);
 router.post('/add', addPoints);
 router.get('/get_all', getAllPoint);
