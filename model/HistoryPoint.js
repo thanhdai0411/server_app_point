@@ -4,18 +4,14 @@ const { Schema } = mongoose;
 
 const historyPointSchema = new Schema(
     {
-        number_point: {
-            type: Number,
-            required: true,
-        },
         exchange_point: {
-            type: Number,
+            type: String,
         },
         accumulate_point: {
-            type: Number,
+            type: String,
         },
         donate_points: {
-            type: Number,
+            type: String,
         },
         user_id: {
             type: Schema.Types.ObjectId,

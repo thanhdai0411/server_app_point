@@ -20,6 +20,7 @@ const pointController = {
             // update user
             if (userID) {
                 const user = User.findOne({ _id: userID });
+
                 await user.updateOne({ $push: { points: savePoint.code_scanner } });
             }
 

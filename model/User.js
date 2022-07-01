@@ -16,11 +16,11 @@ const userSchema = new Schema(
         },
         address: {
             type: String,
-            unique: true,
-            required: true,
         },
         phone_number: {
             type: String,
+            unique: true,
+            required: true,
         },
         password: {
             type: String,
@@ -31,7 +31,6 @@ const userSchema = new Schema(
             type: String,
         },
 
-        info_bank: { type: String },
         number_point: {
             type: Number,
             default: 0,
@@ -52,7 +51,12 @@ const userSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Rank',
         },
-
+        info_bank: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'InfoBank',
+            },
+        ],
         points: [
             {
                 type: String,
@@ -62,7 +66,7 @@ const userSchema = new Schema(
         history_point: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Point',
+                ref: 'HistoryPoint',
             },
         ],
         deleted: {

@@ -4,14 +4,14 @@ const {
     getAllUser,
     getAnUserById,
     getAnUserByPhoneNumber,
-    addNumberPointByID,
-    addNumberPointByPhone,
+    updateUserByID,
+    updateUserByPhone,
     updateUser,
 } = require('../controller/userController');
 
 router.post('/add', addUser);
-router.put('/add_number_point_phone/:phone_number', addNumberPointByPhone);
-router.put('/add_number_point_id/:id', addNumberPointByID);
+router.put('/update_user_phone/:phone_number', updateUserByPhone);
+router.put('/update_user_id/:id', updateUserByID);
 router.put('/update/:id', updateUser);
 router.get('/get_id/:id', getAnUserById);
 router.get('/get_phone/:phone_number', getAnUserByPhoneNumber);
