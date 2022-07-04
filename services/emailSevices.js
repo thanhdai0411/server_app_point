@@ -26,7 +26,7 @@ const sendEmailServices = async ({
         html: `
         
             
-            <h3>Xin chào ${user_name} !</h3>
+            <h3>Xin chào! ${user_name}</h3>
             <p>Bạn nhận được email này vì bạn đã tiến hành đổi điểm thành công AWPoint tại app Awaco</p>
             <div>Thông tin cá nhân của bạn:</div>
 
