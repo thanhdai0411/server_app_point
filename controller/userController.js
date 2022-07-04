@@ -42,9 +42,9 @@ const userController = {
     },
     getAnUserById: async (req, res) => {
         try {
-            const user = await User.findById({ _id: req.params.id }).populate(
-                'history_point'
-            );
+            const user = await User.findById({ _id: req.params.id })
+                .populate('history_point')
+                .populate('info_bank');
             res.json({ success: true, data: user });
         } catch (err) {
             res.status(500).json({ success: false, message: 'Internal Server Error' });

@@ -16,6 +16,7 @@ const InfoBankSchema = new Schema(
         account_number: {
             type: String,
         },
+
         number_cmnd: {
             type: String,
         },

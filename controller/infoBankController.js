@@ -20,6 +20,14 @@ const infoBankController = {
             res.status(500).json({ success: false, message: err.message });
         }
     },
+    getAllInfoBank: async (req, res) => {
+        try {
+            const all_info = await InfoBank.find();
+            res.json({ success: true, data: all_info });
+        } catch (err) {
+            res.status(500).json({ success: false, message: err.message });
+        }
+    },
 };
 
 module.exports = infoBankController;
