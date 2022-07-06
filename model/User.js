@@ -6,13 +6,9 @@ const userSchema = new Schema(
     {
         username: {
             type: String,
-            required: true,
-            unique: true,
         },
         email: {
             type: String,
-            require: true,
-            unique: true,
         },
         address: {
             type: String,
@@ -21,14 +17,6 @@ const userSchema = new Schema(
             type: String,
             unique: true,
             required: true,
-        },
-        avatar: {
-            data: Buffer,
-            contentType: String,
-        },
-        password: {
-            type: String,
-            require: true,
         },
 
         presenter: {
@@ -43,6 +31,11 @@ const userSchema = new Schema(
             type: Number,
             default: 0,
         },
+        avatar: String,
+        image: {
+            type: Schema.Types.ObjectId,
+            ref: 'Image',
+        },
         discount_id: {
             type: Schema.Types.ObjectId,
             ref: 'Discount',
@@ -55,12 +48,10 @@ const userSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Rank',
         },
-        info_bank: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'InfoBank',
-            },
-        ],
+        info_bank: {
+            type: Schema.Types.ObjectId,
+            ref: 'InfoBank',
+        },
         points: [
             {
                 type: String,
@@ -73,10 +64,6 @@ const userSchema = new Schema(
                 ref: 'HistoryPoint',
             },
         ],
-        deleted: {
-            type: Number,
-            default: 0,
-        },
     },
     { timestamps: true }
 );

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Grid = require('gridfs-stream');
 const Image = require('../model/Image');
+const User = require('../model/User');
 
 let gfs, gridfsBucket;
 
@@ -19,15 +20,13 @@ const imageController = {
     uploadImage: async (req, res) => {
         try {
             if (req.file === undefined)
-                return res
-                    .status(401)
-                    .json({ success: false, message: 'missing url image' });
+                return res.status(401).json({
+                    success: false,
+                    message: 'missing url image or phone number',
+                });
             const imgUrl = await `${process.env.URL}/api/file/get/${req.file.filename}`;
 
-            const newImage = new Image({ ...req.body, imageURL: imgUrl });
-            const saveImage = await newImage.save();
-
-            res.json({ success: true, data: saveImage });
+            res.json({ success: true, data: imgUrl });
         } catch (err) {
             res.status(500).json({ success: false, message: err.message });
         }

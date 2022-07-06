@@ -4,8 +4,6 @@ const { Schema } = mongoose;
 
 const ImageSchema = new Schema(
     {
-        name: String,
-        desc: String,
         imageURL: String,
     },
     { timestamps: true }

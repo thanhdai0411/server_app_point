@@ -5,26 +5,25 @@ const HistoryPoint = require('../model/HistoryPoint');
 
 const userController = {
     addUser: async (req, res) => {
-        const { username, email, address, phone_number, password } = req.body;
-        if (!username || !email || !password || !phone_number) {
-            return res.status(400).json({
-                success: false,
-                message: 'Missing username or/and email, password, phone-number',
-            });
-        }
+        const { phone_number } = req.body;
         try {
+            if (!phone_number) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Missing phone-number',
+                });
+            }
             //check user exist
-            const user = await User.findOne({ username });
-            const _email = await User.findOne({ email });
+
             const _phone_number = await User.findOne({ phone_number });
-            if (user || _email || _phone_number) {
+            if (_phone_number) {
                 res.status(400).json({
                     success: false,
-                    message: 'User already existing or/and email, phone-number',
+                    message: 'User already existing  phone-number',
                 });
             }
 
-            const newUser = new User(req.body);
+            const newUser = new User({ ...req.body });
             const saveUser = await newUser.save();
 
             res.json({ success: true, data: saveUser });
@@ -54,7 +53,9 @@ const userController = {
         try {
             const user = await User.findOne({
                 phone_number: req.params.phone_number,
-            }).populate('history_point');
+            })
+                .populate('history_point')
+                .populate('info_bank');
             res.json({ success: true, data: user });
         } catch (err) {
             res.status(500).json({ success: false, message: 'Internal Server Error' });
@@ -69,21 +70,41 @@ const userController = {
         }
     },
 
-    // add point
-
-    // PUT : add_number_point_phone/:phone_number  (donate)
-    updateUserByPhone: async (req, res) => {
+    //[DELETE] : /delete/:id
+    deleteUser: async (req, res) => {
         try {
-            await User.findOneAndUpdate(
-                { phone_number: req.params.phone_number },
-                req.body
-            );
-            res.json({ success: true, message: 'Update number point success' });
+            await User.findByIdAndDelete({ _id: req.params.id });
+            res.json({ success: true, message: 'Delete user success' });
         } catch (err) {
             res.status(500).json({ success: false, message: 'Internal Server Error' });
         }
     },
-    // PUT : add_number_point_id/:id
+
+    //[DELETE] : /delete_all
+    deleteAllUser: async (req, res) => {
+        try {
+            await User.remove();
+            res.json({ success: true, message: 'Delete all user success' });
+        } catch (err) {
+            res.status(500).json({ success: false, message: 'Internal Server Error' });
+        }
+    },
+
+    // add point
+
+    // PUT : update_user_phone/:phone_number  (donate)
+    updateUserByPhone: async (req, res) => {
+        try {
+            const updateUser = await User.findOneAndUpdate(
+                { phone_number: req.params.phone_number },
+                req.body
+            );
+            res.json({ success: true, message: 'Update user success' });
+        } catch (err) {
+            res.status(500).json({ success: false, message: 'Internal Server Error' });
+        }
+    },
+    // PUT : /update_user_id/:id
     updateUserByID: async (req, res) => {
         const { number_point } = req.body;
         try {
