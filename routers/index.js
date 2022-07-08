@@ -5,6 +5,12 @@ const historyPointRoute = require('./historyPointRoute');
 const infoBankRoute = require('./infoBankRoute');
 const imageUploadRoute = require('./imageUploadRoute');
 const sendEmailRoute = require('./sendEmailRoute');
+const giftRoute = require('./giftRoute');
+const marketingRouter = require('./marketingRoute');
+
+//view
+
+const viewRoute = require('./viewRoute/viewRoute');
 
 const routerConfig = (app) => {
     app.use('/api/product', productRoute);
@@ -13,7 +19,11 @@ const routerConfig = (app) => {
     app.use('/api/history_point', historyPointRoute);
     app.use('/api/info_bank', infoBankRoute);
     app.use('/api/file', imageUploadRoute);
+    app.use('/api/gift', giftRoute);
+    app.use('/api/marketing', marketingRouter);
     app.use('/api/send_email', sendEmailRoute);
+
+    app.use('/view', viewRoute);
 };
 
 module.exports = routerConfig;

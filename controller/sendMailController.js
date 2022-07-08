@@ -2,7 +2,7 @@ const emailServices = require('../services/emailSevices');
 
 const sendMailController = {
     sendMail: async (req, res) => {
-        // console.log(req.body);
+        console.log(req.body);
         const { email, user_name, name_bank, branch_bank, account_number } = req.body;
         try {
             await emailServices({

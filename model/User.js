@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoose_delete = require('mongoose-delete');
 
 const { Schema } = mongoose;
 
@@ -32,6 +33,7 @@ const userSchema = new Schema(
             default: 0,
         },
         avatar: String,
+        wall: String,
         image: {
             type: Schema.Types.ObjectId,
             ref: 'Image',
@@ -52,6 +54,7 @@ const userSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'InfoBank',
         },
+
         points: [
             {
                 type: String,
@@ -67,6 +70,11 @@ const userSchema = new Schema(
     },
     { timestamps: true }
 );
+
+userSchema.plugin(mongoose_delete, {
+    deletedAt: true,
+    overrideMethods: ['count', 'find', 'findOneAndUpdate', 'update'],
+});
 
 const User = mongoose.model('User', userSchema);
 

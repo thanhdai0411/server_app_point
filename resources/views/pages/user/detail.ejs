@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../../partials/head.ejs') %>
+    </head>
+    <body>
+        <%- include('../../partials/header.ejs') %>
+        <div class="container">
+            <h2 class="text-center my-4">Thông tin người dùng <%= user.username %></h2>
+            <% if (user) { %>
+
+            <div
+                class=""
+                style="
+                    border: 1px solid #ccc;
+                    padding: 20px;
+                    border-radius: 10px;
+                    margin-bottom: 50px;
+                "
+            >
+                <div class="" style="border-bottom: 1.5px solid #eee; margin-top: 10px">
+                    <p style="font-weight: 600; margin-bottom: 10px">Tên người dùng</p>
+                    <p style="margin: 0"><%= user.username %></p>
+                </div>
+                <div class="" style="border-bottom: 1.5px solid #eee; margin-top: 10px">
+                    <p style="font-weight: 600; margin-bottom: 10px">Số điện thoại</p>
+                    <p style="margin: 0"><%= user.phone_number %></p>
+                </div>
+                <div class="" style="border-bottom: 1.5px solid #eee; margin-top: 10px">
+                    <p style="font-weight: 600; margin-bottom: 10px">Email</p>
+                    <p style="margin: 0"><%= user.email %></p>
+                </div>
+                <div class="" style="border-bottom: 1.5px solid #eee; margin-top: 10px">
+                    <p style="font-weight: 600; margin-bottom: 10px">Địa chỉ</p>
+                    <p style="margin: 0"><%= user.address %></p>
+                </div>
+                <div class="" style="border-bottom: 1.5px solid #eee; margin-top: 10px">
+                    <p style="font-weight: 600; margin-bottom: 10px">
+                        Số điểm đã tích lũy
+                    </p>
+                    <p style="margin: 0"><%= user.number_point %> Điểm</p>
+                </div>
+
+                <div class="" style="border-bottom: 1.5px solid #eee; margin-top: 10px">
+                    <p style="font-weight: 600; margin-bottom: 10px">
+                        Thông tin ngân hàng
+                    </p>
+                    <% if (user.info_bank) { %>
+
+                    <p style="margin-bottom: 6px">
+                        Ngân hàng: <%= user.info_bank.name_bank %>
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Chi nhánh: <%= user.info_bank.branch_bank %>
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Chủ tài khoản: <%= user.info_bank.name_account %>
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Số tài khoản: <%= user.info_bank.account_number %>
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Số CMND: <%= user.info_bank.number_cmnd %>
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Ngày cấp CMND: <%= user.info_bank.date_publish_cmnd %>
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Nơi cấp CMND: <%= user.info_bank.cmnd_issued_by %>
+                    </p>
+                    <% } else { %>
+                    <p>Chưa cập nhật thông tin ngân hàng</p>
+                    <% } %>
+                </div>
+            </div>
+            <% } else { %>
+
+            <p class="text-center mt-4">Thông tin người dùng chưa được cập nhật</p>
+            <% } %>
+        </div>
+        <%- include('../../partials/footer.ejs') %>
+    </body>
+</html>

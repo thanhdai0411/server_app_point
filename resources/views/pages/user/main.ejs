@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../../partials/head.ejs') %>
+    </head>
+    <body>
+        <%- include('../../partials/header.ejs') %>
+        <div class="container" style="margin-bottom: 200px">
+            <h2 class="text-center my-4">Quản lý người dùng trong hệ thống</h2>
+            <table class="table table-bordered">
+                <thead class="text-center">
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Điểm</th>
+                        <th scope="col">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider text-center">
+                    <% users.forEach((user,index) => { %>
+
+                    <tr class="">
+                        <th scope="row"><%= index+1 %></th>
+                        <td><%= user.username %></td>
+                        <td><%= user.phone_number %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.number_point %></td>
+                        <td>
+                            <a class="btn btn-primary" href="/view/user/<%= user._id %> ">
+                                Chi tiết
+                            </a>
+                            <a
+                                class="btn btn-danger"
+                                id="btn-delete-user"
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirmDeleteModal"
+                                data-id="<%= user._id %>"
+                                >Xóa</a
+                            >
+
+                            <!-- Modal -->
+                            <div
+                                class="modal fade"
+                                id="confirmDeleteModal"
+                                tabindex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                            >
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5
+                                                class="modal-title"
+                                                id="exampleModalLabel"
+                                            >
+                                                Xóa người dùng
+                                            </h5>
+                                            <button
+                                                type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                            ></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Bạn chắn chắn muốn xóa người dùng này ra khỏi
+                                            hệ thống
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button
+                                                type="button"
+                                                class="btn btn-secondary"
+                                                data-bs-dismiss="modal"
+                                            >
+                                                Trở về
+                                            </button>
+                                            <a
+                                                type="button"
+                                                class="btn btn-danger"
+                                                id="button-confirm-delete_user"
+                                            >
+                                                Xóa
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <form name="delete-form" method="post"></form>
+        </div>
+        <%- include('../../partials/footer.ejs') %>
+
+        <script>
+            const confirmDeleteModal = document.getElementById('confirmDeleteModal');
+            const deleteForm = document.forms['delete-form'];
+
+            const buttonConfirmDeleteUser = document.querySelectorAll(
+                '#button-confirm-delete_user'
+            );
+            let idUser;
+            confirmDeleteModal.addEventListener('show.bs.modal', (event) => {
+                const button = event.relatedTarget;
+                idUser = button.getAttribute('data-id');
+            });
+            buttonConfirmDeleteUser.forEach((btnDelete) => {
+                btnDelete.onclick = (e) => {
+                    deleteForm.action = `/view/user/trash/${idUser}/delete?_method=DELETE`;
+                    deleteForm.submit();
+                };
+            });
+        </script>
+    </body>
+</html>

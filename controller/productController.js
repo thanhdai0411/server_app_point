@@ -3,7 +3,7 @@ const productController = {
     addProduct: async (req, res) => {
         const { title, price, thumbnail, description, manufacturer, discount } = req.body;
         if (!title || !price || !thumbnail) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Missing title or/and price, thumbnail ',
             });

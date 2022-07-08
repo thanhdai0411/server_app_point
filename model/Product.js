@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const {
-    ModelBuildInstance,
-} = require('twilio/lib/rest/autopilot/v1/assistant/modelBuild');
 
 const { Schema } = mongoose;
 

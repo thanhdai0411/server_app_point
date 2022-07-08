@@ -37,6 +37,15 @@ const infoBankController = {
             res.status(500).json({ success: false, message: err.message });
         }
     },
+    updateInfoBank : async(req,res) => {
+        try {
+            await InfoBank.findByIdAndUpdate({_id: req.params.id}, req.body) 
+            res.json({success: true, message: "Update info bank success"})    
+        }
+        catch(err) {
+            res.status(500).json({success: false, message: err.message})
+        }
+    },
     deleteAllInfoBank: async (req, res) => {
         try {
             await InfoBank.remove();

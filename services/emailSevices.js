@@ -17,7 +17,6 @@ const sendEmailServices = async ({
         },
     });
 
-    // send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Ban quản trị Awaco Group" <ngothanhdai123@gmail.com>', // sender address
         // to: 'bar@example.com, baz@example.com', // list of receivers
