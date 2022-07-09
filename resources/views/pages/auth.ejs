@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../partials/head.ejs') %>
+    </head>
+    <body style="background-color: #6c6d6b">
+        <div class="container mt-5" style="width: 60%; background-color: white">
+            <div class="row">
+                <div class="col-lg-6 gx-0">
+                    <img src="/img/login.jpg" alt="" width="100%" height="100%" />
+                </div>
+                <form
+                    class="col-lg-6 form-auth"
+                    id="form-login"
+                    action="/view/login/user"
+                    method="post"
+                    style="padding: 20px"
+                >
+                    <!-- <div class="text-center">
+                        <img src="/img/logo.png" alt="" width="80px" />
+                    </div> -->
+                    <h2 class="text-center mb-3">Đăng nhập</h2>
+                    <div class="mb-3">
+                        <label
+                            for="exampleFormControlInput1"
+                            class="form-label"
+                            id="username"
+                            >Tên đăng nhập</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="username"
+                            id="username"
+                            placeholder="Nhập tên đăng nhập của bạn"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label"
+                            >Mật khẩu</label
+                        >
+                        <input
+                            type="password"
+                            name="password"
+                            class="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Nhập mật khẩu của bạn"
+                        />
+                    </div>
+                    <div>
+                        <span>Quên mật khẩu ?</span>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button
+                            type="submit"
+                            id="btn-login-1"
+                            class="btn btn-success"
+                            style="width: 100%"
+                        >
+                            Đăng nhập
+                        </button>
+                    </div>
+                    <div class="text-center mt-2">
+                        <p class="mb-2">Chưa có tài khoản</p>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="btn-register-1"
+                            style="width: 100%"
+                        >
+                            Đăng ký
+                        </button>
+                    </div>
+                </form>
+
+                <!-- form signup -->
+                <form
+                    class="col-lg-6 form-auth"
+                    id="form-signup"
+                    action=""
+                    style="padding: 20px; display: none"
+                >
+                    <!-- <div class="text-center">
+                        <img src="/img/logo.png" alt="" width="80px" />
+                    </div> -->
+                    <h2 class="text-center mb-3">Đăng ký</h2>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label"
+                            >Tên đăng nhập</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Nhập tên đăng nhập của bạn"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label"
+                            >Mật khẩu</label
+                        >
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Nhập mật khẩu của bạn"
+                        />
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button
+                            type="submit"
+                            id="btn-register-2"
+                            class="btn btn-success"
+                            style="width: 100%"
+                        >
+                            Đăng ký
+                        </button>
+                    </div>
+                    <div class="text-center mt-2">
+                        <p class="mb-2">Đã có tài khoản</p>
+                        <button
+                            type="button"
+                            id="btn-login-2"
+                            class="btn btn-primary"
+                            style="width: 100%"
+                        >
+                            Đăng nhập
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+    <script>
+        const formLogin = document.getElementById('form-login');
+        const formSignup = document.getElementById('form-signup');
+
+        const btnLogin2 = document.getElementById('btn-login-2');
+        const btnRegister2 = document.getElementById('btn-register-2');
+
+        const btnLogin1 = document.getElementById('btn-login-1');
+        const btnRegister1 = document.getElementById('btn-register-1');
+
+        btnLogin2.onclick = (e) => {
+            console.log('login');
+            formSignup.style.display = 'none';
+            formLogin.style.display = 'block';
+        };
+
+        btnRegister1.onclick = (e) => {
+            formLogin.style.display = 'none';
+            formSignup.style.display = 'block';
+        };
+    </script>
+</html>

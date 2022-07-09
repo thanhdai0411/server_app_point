@@ -4,7 +4,8 @@ const managerUserViewController = {
     managerUser: async (req, res) => {
         try {
             const users = await User.find();
-            res.render('pages/user/main', { users });
+            const numberDeleted = await User.countDeleted();
+            res.render('pages/user/main', { users, numberDeleted });
         } catch (err) {
             console.log(err.message);
         }

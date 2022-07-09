@@ -6,9 +6,9 @@
     <body>
         <%-include('../partials/header.ejs') %>
         <div class="container">
+            <% if (userDeleted.length > 0) { %>
             <h2 class="text-center my-4">Người dùng bị xóa</h2>
-            <% if (userDeleted) { %>
-            <table class="table table-bordered">
+            <table class="table table-bordered mb-5">
                 <thead class="text-center">
                     <tr>
                         <th scope="col">STT</th>
@@ -33,18 +33,27 @@
                                 Chi tiết
                             </a>
                             <a
-                                class="btn btn-danger"
-                                id="btn-delete-user"
+                                class="btn btn-success"
+                                id="btn-restore"
                                 data-bs-toggle="modal"
-                                data-bs-target="#confirmDeleteModal"
+                                data-bs-target="#confirmDeleteRestoreModal"
+                                data-id="<%= user._id %>"
+                            >
+                                Khôi phục
+                            </a>
+                            <a
+                                class="btn btn-danger"
+                                id="btn-delete-forever"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modal-delete-forever"
                                 data-id="<%= user._id %>"
                                 >Xóa vĩnh viễn</a
                             >
 
-                            <!-- Modal -->
+                            <!-- Modal restore-->
                             <div
                                 class="modal fade"
-                                id="confirmDeleteModal"
+                                id="confirmDeleteRestoreModal"
                                 tabindex="-1"
                                 aria-labelledby="exampleModalLabel"
                                 aria-hidden="true"
@@ -56,7 +65,7 @@
                                                 class="modal-title"
                                                 id="exampleModalLabel"
                                             >
-                                                Xóa người dùng
+                                                Khôi phục người dùng
                                             </h5>
                                             <button
                                                 type="button"
@@ -66,8 +75,54 @@
                                             ></button>
                                         </div>
                                         <div class="modal-body">
-                                            Bạn chắn chắn muốn xóa người dùng này ra khỏi
-                                            hệ thống
+                                            Bạn chắn chắn muốn khôi phúc người dùng này
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button
+                                                type="button"
+                                                class="btn btn-secondary"
+                                                data-bs-dismiss="modal"
+                                            >
+                                                Trở về
+                                            </button>
+                                            <a
+                                                type="button"
+                                                class="btn btn-success"
+                                                id="btn-confirm-restore"
+                                            >
+                                                Khôi phục
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal delete forever-->
+                            <div
+                                class="modal fade"
+                                id="modal-delete-forever"
+                                tabindex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                            >
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5
+                                                class="modal-title"
+                                                id="exampleModalLabel"
+                                            >
+                                                Xóa vĩnh viễn người dùng
+                                            </h5>
+                                            <button
+                                                type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                            ></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Bạn chắn chắn muốn xóa vĩnh viễn người dùng
+                                            này
                                         </div>
                                         <div class="modal-footer">
                                             <button
@@ -80,9 +135,9 @@
                                             <a
                                                 type="button"
                                                 class="btn btn-danger"
-                                                id="button-confirm-delete_user"
+                                                id="btn-confirm-delete-forever"
                                             >
-                                                Xóa
+                                                Xóa vĩnh viễn
                                             </a>
                                         </div>
                                     </div>
@@ -97,8 +152,56 @@
             <% } else { %>
             <h3 class="text-center mt-5">Thùng rác trống</h3>
             <% } %>
+            <form name="delete-forever-user-form" method="post"></form>
+            <form name="restore-user-form" method="post"></form>
         </div>
 
         <!-- <%-include('../partials/footer.ejs') %> -->
     </body>
+
+    <script>
+        const deleteForeverForm = document.forms['delete-forever-user-form'];
+        const restoreForm = document.forms['restore-user-form'];
+
+        const confirmDeleteRestoreModal = document.querySelector(
+            '#confirmDeleteRestoreModal'
+        );
+        const modalDeleteForever = document.querySelector('#modal-delete-forever');
+
+        const btnConfirmRestore = document.querySelectorAll('#btn-confirm-restore');
+        const btnConfirmDeleteForever = document.querySelectorAll(
+            '#btn-confirm-delete-forever'
+        );
+
+        // restore user
+
+        let idUser;
+
+        confirmDeleteRestoreModal.addEventListener('show.bs.modal', (event) => {
+            const button = event.relatedTarget;
+            idUser = button.getAttribute('data-id');
+        });
+
+        btnConfirmRestore.forEach((btnRestore) => {
+            btnRestore.onclick = (e) => {
+                restoreForm.action = `/view/user/trash/${idUser}/restore?_method=PATCH`;
+                restoreForm.submit();
+            };
+        });
+        // delete forever user
+
+        let idUserDelete;
+
+        modalDeleteForever.addEventListener('show.bs.modal', (event) => {
+            const button = event.relatedTarget;
+            idUserDelete = button.getAttribute('data-id');
+        });
+
+        btnConfirmDeleteForever.forEach((btnDeleteForever) => {
+            btnDeleteForever.onclick = (e) => {
+                deleteForeverForm.action = `/view/user/trash/${idUserDelete}/delete-forever?_method=DELETE`;
+                deleteForeverForm.submit();
+            };
+        });
+    </script>
 </html>

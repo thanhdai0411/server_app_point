@@ -64,7 +64,7 @@ const userController = {
     updateUser: async (req, res) => {
         try {
             const user = await User.findByIdAndUpdate({ _id: req.params.id }, req.body);
-            res.json({ success: true, data: user });
+            res.json({ success: true, message: 'Update user success' });
         } catch (err) {
             res.status(500).json({ success: false, message: 'Internal Server Error' });
         }
