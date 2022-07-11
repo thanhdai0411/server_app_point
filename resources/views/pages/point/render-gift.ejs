@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../../partials/head.ejs') %>
+    </head>
+    <body>
+        <%- include('../../partials/header.ejs') %>
+        <div class="container-fluid">
+            <div class="row">
+                <div
+                    class="col-lg-3 d-flex flex-column flex-shrink-0 p-3 bg-light border-end"
+                    style="height: 100vh"
+                >
+                    <a
+                        href="/view/point"
+                        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+                    >
+                        <span class="fs-4">Tích điểm</span>
+                    </a>
+                    <hr />
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a
+                                href="/view/point/get"
+                                class="nav-link text-dark"
+                                id="nav-link-sidebar"
+                                aria-current="page"
+                            >
+                                <i
+                                    class="bi bi-house-door"
+                                    style="font-size: 20px; margin-right: 5px"
+                                ></i>
+                                Cài đặt QRCode
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="/view/gift/get"
+                                class="nav-link active"
+                                id="nav-link-sidebar"
+                            >
+                                <i
+                                    class="bi bi-gift"
+                                    style="font-size: 20px; margin-right: 5px"
+                                ></i>
+                                Phần quà
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-9 mb-5">
+                    <% if (gifts.length> 0) { %>
+                    <h3 class="text-center my-4">Phần quá đã đăng</h3>
+                    <div style="width: 100%" class="mx-auto">
+                        <table class="table table-bordered">
+                            <thead class="text-center">
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Tiêu đề</th>
+                                    <th scope="col">Điểm đổi</th>
+                                    <th scope="col">Loại</th>
+                                    <th scope="col">Hiện còn</th>
+                                    <th scope="col">Hạn đổi</th>
+                                    <th scope="col">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider text-center">
+                                <% if (gifts) { %> <% gifts.forEach((gift,index) => { %>
+
+                                <tr class="">
+                                    <th scope="row"><%= index+1 %></th>
+                                    <td
+                                        style="
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                            display: -webkit-box;
+                                            -webkit-line-clamp: 1; /* number of lines to show */
+                                            line-clamp: 1;
+                                            word-wrap: break-word;
+                                            -webkit-box-orient: vertical;
+                                            padding: 0;
+                                        "
+                                    >
+                                        <%= gift.title %>
+                                    </td>
+                                    <td><%= gift.number_point_buy%></td>
+                                    <td><%= gift.type_gift%></td>
+                                    <td><%= gift.number_count%></td>
+                                    <td><%= gift.deadline%></td>
+                                    <td>
+                                        <a
+                                            class="btn btn-primary"
+                                            data-id="<%= gift._id %>"
+                                            href="/view/gift/get/<%= gift._id %>"
+                                        >
+                                            Chi tiết
+                                        </a>
+                                        <a
+                                            class="btn btn-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmDeleteGift"
+                                            data-id="<%= gift._id %>"
+                                        >
+                                            Xóa
+                                        </a>
+
+                                        <div
+                                            class="modal fade"
+                                            id="confirmDeleteGift"
+                                            tabindex="-1"
+                                            aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true"
+                                        >
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5
+                                                            class="modal-title"
+                                                            id="exampleModalLabel"
+                                                        >
+                                                            Xóa vĩnh viễn phần quà
+                                                        </h5>
+                                                        <button
+                                                            type="button"
+                                                            class="btn-close"
+                                                            data-bs-dismiss="modal"
+                                                            aria-label="Close"
+                                                        ></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Bạn chắn chắn muốn xóa vĩnh viễn
+                                                        phần quà này
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button
+                                                            type="button"
+                                                            class="btn btn-secondary"
+                                                            data-bs-dismiss="modal"
+                                                        >
+                                                            Trở về
+                                                        </button>
+                                                        <a
+                                                            type="button"
+                                                            class="btn btn-danger"
+                                                            id="button-confirm-delete_gift"
+                                                        >
+                                                            Xóa
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% }) %> <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <% } else { %>
+                    <h3 class="text-center my-4">Hiện tại chưa đăng phần quà nào</h3>
+                    <% } %>
+                    <div class="text-center">
+                        <a class="btn btn-dark text-center" href="/view/gift">
+                            Đăng thêm quà đổi thưởng
+                        </a>
+                    </div>
+
+                    <form name="delete-gift" method="post"></form>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        const confirmDeleteModal = document.getElementById('confirmDeleteGift');
+        const buttonConfirmDeleteGift = document.querySelectorAll(
+            '#button-confirm-delete_gift'
+        );
+        const deleteSettingForm = document.forms['delete-gift'];
+
+        let idUser;
+        confirmDeleteModal.addEventListener('show.bs.modal', (event) => {
+            const button = event.relatedTarget;
+            idUser = button.getAttribute('data-id');
+        });
+        buttonConfirmDeleteGift.forEach((btn) => {
+            btn.onclick = () => {
+                deleteSettingForm.action = `/view/gift/delete/${idUser}?_method=DELETE`;
+                deleteSettingForm.submit();
+            };
+        });
+    </script>
+</html>

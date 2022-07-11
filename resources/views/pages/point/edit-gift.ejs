@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../../partials/head.ejs') %>
+    </head>
+    <body>
+        <%- include('../../partials/header.ejs') %>
+        <div class="container-fluid">
+            <div class="row">
+                <div
+                    class="col-lg-3 d-flex flex-column flex-shrink-0 p-3 bg-light border-end"
+                >
+                    <a
+                        href="/view/point"
+                        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+                    >
+                        <span class="fs-4">Tích điểm</span>
+                    </a>
+                    <hr />
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a
+                                href="/view/point/get"
+                                class="nav-link text-dark"
+                                id="nav-link-sidebar"
+                                aria-current="page"
+                            >
+                                <i
+                                    class="bi bi-house-door"
+                                    style="font-size: 20px; margin-right: 5px"
+                                ></i>
+                                Cài đặt QRCode
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="/view/gift/get"
+                                class="nav-link active"
+                                id="nav-link-sidebar"
+                            >
+                                <i
+                                    class="bi bi-gift"
+                                    style="font-size: 20px; margin-right: 5px"
+                                ></i>
+                                Phần quà
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-9">
+                    <form
+                        class="mx-auto"
+                        style="width: 90%; margin-bottom: 50px"
+                        method="post"
+                        action="/view/gift/add"
+                        enctype="multipart/form-data"
+                    >
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="text-center my-4">Chỉnh sửa quà đổi điểm</h3>
+                            <a class="btn btn-warning" href="/view/gift/get"
+                                >Phần quà hiện có</a
+                            >
+                        </div>
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Tiêu đề</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="title"
+                                name="title"
+                                value="<%= gift.title %> "
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="number_point_buy" class="form-label"
+                                >Số điểm cần để đổi</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="number_point_buy"
+                                name="number_point_buy"
+                                value="<%= gift.number_point_buy %> "
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="type_gift" class="form-label">Loại quà</label>
+                            <select
+                                class="form-select"
+                                name="type_gift"
+                                aria-label="Default select example"
+                                value="<%= gift.type_gift %> "
+                            >
+                                <option selected>Open this select menu</option>
+                                <option value="quà">Đổi điểm thành quà</option>
+                                <option value="tiền">Đổi điểm thành tiền</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label"
+                                >Miêu tả sản phẩm</label
+                            >
+                            <textarea
+                                class="form-control"
+                                id="description"
+                                name="description"
+                                rows="3"
+                                value="<%= gift.description %> "
+                            ></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deadline" class="form-label">Hạn đổi quà</label>
+                            <input
+                                type="date"
+                                class="form-control"
+                                id="deadline"
+                                name="deadline"
+                                value="<%= gift.deadline %> "
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="number_count" class="form-label"
+                                >Số quà hiện có</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="number_count"
+                                name="number_count"
+                                value="<%= gift.number_count %> "
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Hình minh họa</label>
+                            <input
+                                type="file"
+                                class="form-control"
+                                id="image"
+                                name="image"
+                            />
+                        </div>
+
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary mb-3">
+                                Xác nhận
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

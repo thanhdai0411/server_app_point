@@ -3,12 +3,14 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 var methodOverride = require('method-override');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = process.env.PORT || 8889;
 
 app.use(cors());
 app.use(methodOverride('_method'));
+app.use(cookieParser());
 
 //! import
 const routerConfig = require('./routers');
@@ -29,6 +31,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //! config router
 routerConfig(app);
+
+//
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

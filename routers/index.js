@@ -7,6 +7,7 @@ const imageUploadRoute = require('./imageUploadRoute');
 const sendEmailRoute = require('./sendEmailRoute');
 const giftRoute = require('./giftRoute');
 const marketingRouter = require('./marketingRoute');
+const pointSettingRoute = require('./pointSettingRoute');
 
 //view
 
@@ -22,8 +23,10 @@ const routerConfig = (app) => {
     app.use('/api/gift', giftRoute);
     app.use('/api/marketing', marketingRouter);
     app.use('/api/send_email', sendEmailRoute);
+    app.use('/api/point_setting', pointSettingRoute);
 
     app.use('/view', viewRoute);
+    app.use('/', viewRoute);
 };
 
 module.exports = routerConfig;

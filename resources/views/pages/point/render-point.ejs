@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../../partials/head.ejs') %>
+    </head>
+    <body>
+        <%- include('../../partials/header.ejs') %>
+        <div class="container-fluid">
+            <div class="row">
+                <div
+                    class="col-lg-3 d-flex flex-column flex-shrink-0 p-3 bg-light border-end"
+                    style="height: 100vh"
+                >
+                    <a
+                        href="/view/point"
+                        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+                    >
+                        <span class="fs-4">Tích điểm</span>
+                    </a>
+                    <hr />
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a
+                                href="/view/point/get"
+                                class="nav-link active"
+                                id="nav-link-sidebar"
+                                aria-current="page"
+                            >
+                                <i
+                                    class="bi bi-house-door"
+                                    style="font-size: 20px; margin-right: 5px"
+                                ></i>
+                                Cài đặt QRCode
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="/view/gift/get"
+                                class="nav-link text-dark"
+                                id="nav-link-sidebar"
+                            >
+                                <i
+                                    class="bi bi-gift"
+                                    style="font-size: 20px; margin-right: 5px"
+                                ></i>
+                                Phần quà
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-9">
+                    <% if (setting.length> 0) { %>
+                    <h3 class="text-center my-4">
+                        Bảng điểm tương ứng với mã đã cài đặt
+                    </h3>
+                    <div style="width: 90%" class="mx-auto">
+                        <table class="table table-bordered">
+                            <thead class="text-center">
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Tiền tố</th>
+                                    <th scope="col">Số điểm cộng cho người quét</th>
+                                    <th scope="col">Số điểm cộng cho người giới thiệu</th>
+                                    <th scope="col">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider text-center">
+                                <% if (setting) { %> <% setting.forEach((point,index) => {
+                                %>
+
+                                <tr class="">
+                                    <th scope="row"><%= index+1 %></th>
+                                    <td><%= point.prefix %></td>
+                                    <td><%= point.number_point_user %></td>
+                                    <td><%= point.number_point_intro %></td>
+                                    <td>
+                                        <a
+                                            class="btn btn-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmDeleteSettingPoint"
+                                            data-id="<%= point._id %>"
+                                        >
+                                            Xóa
+                                        </a>
+
+                                        <div
+                                            class="modal fade"
+                                            id="confirmDeleteSettingPoint"
+                                            tabindex="-1"
+                                            aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true"
+                                        >
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5
+                                                            class="modal-title"
+                                                            id="exampleModalLabel"
+                                                        >
+                                                            Xóa vĩnh viễn điểm cài đặt
+                                                        </h5>
+                                                        <button
+                                                            type="button"
+                                                            class="btn-close"
+                                                            data-bs-dismiss="modal"
+                                                            aria-label="Close"
+                                                        ></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Bạn chắn chắn muốn xóa vĩnh viễn
+                                                        mã này
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button
+                                                            type="button"
+                                                            class="btn btn-secondary"
+                                                            data-bs-dismiss="modal"
+                                                        >
+                                                            Trở về
+                                                        </button>
+                                                        <a
+                                                            type="button"
+                                                            class="btn btn-danger"
+                                                            id="button-confirm-delete_setting"
+                                                        >
+                                                            Xóa
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% }) %> <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <% } else { %>
+                    <h3 class="text-center my-4">Hiệm tại chưa có cài đặt nào</h3>
+                    <% } %>
+                    <div class="text-center">
+                        <a class="btn btn-dark text-center" href="/view/point">
+                            Cài đặt thêm tiền tố
+                        </a>
+                    </div>
+
+                    <form name="delete-setting-point" method="post"></form>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        const confirmDeleteModal = document.getElementById('confirmDeleteSettingPoint');
+        const buttonConfirmDeleteSetting = document.querySelectorAll(
+            '#button-confirm-delete_setting'
+        );
+        const deleteSettingForm = document.forms['delete-setting-point'];
+
+        let idUser;
+        confirmDeleteModal.addEventListener('show.bs.modal', (event) => {
+            const button = event.relatedTarget;
+            idUser = button.getAttribute('data-id');
+        });
+        buttonConfirmDeleteSetting.forEach((btn) => {
+            btn.onclick = () => {
+                deleteSettingForm.action = `/view/point/delete/${idUser}?_method=DELETE`;
+                deleteSettingForm.submit();
+            };
+        });
+    </script>
+</html>

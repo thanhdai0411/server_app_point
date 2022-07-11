@@ -12,7 +12,7 @@
                 <form
                     class="col-lg-6 form-auth"
                     id="form-login"
-                    action="/view/login/user"
+                    action="/view/login"
                     method="post"
                     style="padding: 20px"
                 >
@@ -78,7 +78,8 @@
                 <form
                     class="col-lg-6 form-auth"
                     id="form-signup"
-                    action=""
+                    action="/view/register"
+                    method="post"
                     style="padding: 20px; display: none"
                 >
                     <!-- <div class="text-center">
@@ -86,13 +87,17 @@
                     </div> -->
                     <h2 class="text-center mb-3">Đăng ký</h2>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label"
-                            >Tên đăng nhập</label
+                        <label
+                            for="exampleFormControlInput1"
+                            class="form-label"
+                            id="username"
+                            >Tên đăng ký</label
                         >
                         <input
                             type="text"
                             class="form-control"
-                            id="exampleFormControlInput1"
+                            name="username"
+                            id="username"
                             placeholder="Nhập tên đăng nhập của bạn"
                         />
                     </div>
@@ -102,6 +107,7 @@
                         >
                         <input
                             type="password"
+                            name="password"
                             class="form-control"
                             id="exampleFormControlInput1"
                             placeholder="Nhập mật khẩu của bạn"
