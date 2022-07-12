@@ -23,7 +23,9 @@ const userController = {
                 });
             }
 
-            const newUser = new User({ ...req.body });
+            const newUser = new User({
+                ...req.body,
+            });
             const saveUser = await newUser.save();
 
             res.json({ success: true, data: saveUser });
@@ -34,6 +36,7 @@ const userController = {
     getAllUser: async (req, res) => {
         try {
             const users = await User.find();
+
             res.json({ success: true, data: users });
         } catch (err) {
             res.status(500).json({ success: false, message: 'Internal Server Error' });
@@ -44,9 +47,13 @@ const userController = {
             const user = await User.findById({ _id: req.params.id })
                 .populate('history_point')
                 .populate('info_bank');
-            res.json({ success: true, data: user });
+
+            res.json({
+                success: true,
+                data: user,
+            });
         } catch (err) {
-            res.status(500).json({ success: false, message: 'Internal Server Error' });
+            res.status(500).json({ success: false, message: err.message });
         }
     },
     getAnUserByPhoneNumber: async (req, res) => {

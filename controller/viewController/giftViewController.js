@@ -44,10 +44,18 @@ const giftViewController = {
         }
     },
 
-    updateGift: async (req, res) => {
+    renderUpdateGift: async (req, res) => {
         try {
             const gift = await Gift.findById({ _id: req.params.id });
             res.render('pages/point/edit-gift', { gift });
+        } catch (err) {
+            res.render('pages/fail', { message: err.message });
+        }
+    },
+    updateGift: async (req, res) => {
+        try {
+            await Gift.findByIdAndUpdate({ _id: req.params.id }, req.body);
+            res.redirect('/view/gift/get');
         } catch (err) {
             res.render('pages/fail', { message: err.message });
         }

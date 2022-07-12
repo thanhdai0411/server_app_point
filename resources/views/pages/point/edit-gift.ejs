@@ -52,7 +52,7 @@
                         class="mx-auto"
                         style="width: 90%; margin-bottom: 50px"
                         method="post"
-                        action="/view/gift/add"
+                        action="/view/gift/update/<%= gift._id %>?_method=PUT"
                         enctype="multipart/form-data"
                     >
                         <div class="d-flex justify-content-between align-items-center">
@@ -68,7 +68,7 @@
                                 class="form-control"
                                 id="title"
                                 name="title"
-                                value="<%= gift.title %> "
+                                value="<%= gift.title %>"
                             />
                         </div>
                         <div class="mb-3">
@@ -80,7 +80,7 @@
                                 class="form-control"
                                 id="number_point_buy"
                                 name="number_point_buy"
-                                value="<%= gift.number_point_buy %> "
+                                value="<%= gift.number_point_buy %>"
                             />
                         </div>
                         <div class="mb-3">
@@ -89,7 +89,7 @@
                                 class="form-select"
                                 name="type_gift"
                                 aria-label="Default select example"
-                                value="<%= gift.type_gift %> "
+                                value="<%= gift.type_gift %>"
                             >
                                 <option selected>Open this select menu</option>
                                 <option value="quà">Đổi điểm thành quà</option>
@@ -104,9 +104,10 @@
                                 class="form-control"
                                 id="description"
                                 name="description"
-                                rows="3"
-                                value="<%= gift.description %> "
-                            ></textarea>
+                                rows="5"
+                            >
+<%= gift.description %></textarea
+                            >
                         </div>
                         <div class="mb-3">
                             <label for="deadline" class="form-label">Hạn đổi quà</label>
@@ -115,7 +116,7 @@
                                 class="form-control"
                                 id="deadline"
                                 name="deadline"
-                                value="<%= gift.deadline %> "
+                                value="<%= gift.deadline %>"
                             />
                         </div>
                         <div class="mb-3">

@@ -49,6 +49,17 @@ const historyPointController = {
         const htr = await HistoryPoint.findById({ _id: req.params.id });
         res.json({ success: true, data: htr });
     },
+
+    deleteAllHtr: async (req, res) => {
+        try {
+            await HistoryPoint.remove();
+            await User.updateMany({ _id: req.params.id }, { history_point: [] });
+
+            res.json({ success: true, message: 'Delete all success' });
+        } catch (err) {
+            res.status(500).json({ success: false, message: err.message });
+        }
+    },
 };
 
 module.exports = historyPointController;

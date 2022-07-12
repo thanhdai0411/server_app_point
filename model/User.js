@@ -20,7 +20,7 @@ const userSchema = new Schema(
             required: true,
         },
 
-        presenter: {
+        number_phone_presenter: {
             type: String,
         },
 
@@ -29,6 +29,10 @@ const userSchema = new Schema(
             default: 0,
         },
         number_point_introduce: {
+            type: Number,
+            default: 0,
+        },
+        total_number_point: {
             type: Number,
             default: 0,
         },
@@ -54,7 +58,6 @@ const userSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'InfoBank',
         },
-
         points: [
             {
                 type: String,

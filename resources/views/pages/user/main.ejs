@@ -46,8 +46,10 @@
                         <th scope="col">STT</th>
                         <th scope="col">Tên</th>
                         <th scope="col">Số điện thoại</th>
+                        <th scope="col">Người giới thiệu</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Điểm</th>
+                        <th scope="col">Điểm tích</th>
+                        <th scope="col">Điểm giới thiệu</th>
                         <th scope="col">Hành động</th>
                     </tr>
                 </thead>
@@ -58,8 +60,10 @@
                         <th scope="row"><%= index+1 %></th>
                         <td><%= user.username %></td>
                         <td><%= user.phone_number %></td>
+                        <td><%= user.number_phone_presenter %></td>
                         <td><%= user.email %></td>
                         <td><%= user.number_point %></td>
+                        <td><%= user.number_point_introduce %></td>
                         <td>
                             <a class="btn btn-primary" href="/view/user/<%= user._id %> ">
                                 Chi tiết

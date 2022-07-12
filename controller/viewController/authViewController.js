@@ -38,7 +38,7 @@ const authViewController = {
             res.cookie('username', saveAdmin.username);
             res.redirect('/view/user');
         } catch (err) {
-            return res.json(err.message);
+            res.render('pages/fail', { message: err.message });
         }
     },
     login: async (req, res) => {
@@ -68,14 +68,13 @@ const authViewController = {
                 res.cookie('token', accessToken);
                 res.cookie('username', admin.username);
             } else {
-                return res.json({
-                    success: false,
+                return res.render('pages/fail', {
                     message: 'Login fail please check username or/and password again !',
                 });
             }
             res.redirect('/view/user');
         } catch (err) {
-            res.json(err.message);
+            res.render('pages/fail', { message: err.message });
         }
     },
     logout: async (req, res) => {
@@ -88,7 +87,7 @@ const authViewController = {
             const admin = await Admin.findById({ _id: req.params.id });
             res.render('partials/header', { username: admin.username });
         } catch (err) {
-            res.json(err.message);
+            res.render('pages/fail', { message: err.message });
         }
     },
     getAllUserLogin: async (req, res) => {

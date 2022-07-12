@@ -49,6 +49,7 @@ const {
     getGift,
     deleteGift,
     getDetailGift,
+    renderUpdateGift,
     updateGift,
 } = require('../../controller/viewController/giftViewController');
 
@@ -70,11 +71,12 @@ router.delete('/point/delete/:id', deleteSettingPoint);
 
 //!gift
 router.post('/gift/add', uploadImg.single('image'), addGift);
+router.put('/gift/update/:id', uploadImg.single('image'), updateGift);
 router.get('/gift', giftPage);
 router.get('/gift/get', getGift);
 router.get('/gift/get/:id', getDetailGift);
 router.delete('/gift/delete/:id', deleteGift);
-router.get('/gift/update/:id', updateGift);
+router.get('/gift/render-update/:id', renderUpdateGift);
 ///view/gift/update/
 //!user
 router.get('/user', auth, managerUser);
