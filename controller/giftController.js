@@ -29,6 +29,18 @@ const giftController = {
             res.status(500).json({ success: false, message: err.message });
         }
     },
+    getGiftByType: async (req, res) => {
+        const { type } = req.params;
+        let findByType;
+        if (type == 'money_gift') findByType = 'tiền';
+        else if (type == 'product_gift') findByType = 'quà';
+        try {
+            const gift = await Gift.find({ type_gift: findByType });
+            res.json({ success: true, data: gift });
+        } catch (err) {
+            res.status(500).json({ success: false, message: err.message });
+        }
+    },
     getAllGift: async (req, res) => {
         try {
             const gifts = await Gift.find();

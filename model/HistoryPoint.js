@@ -13,6 +13,9 @@ const historyPointSchema = new Schema(
         donate_points: {
             type: String,
         },
+        info_exchange_point: { type: String },
+        info_accumulate_point: { type: String },
+        info_donate_points: { type: String },
         user_id: {
             type: Schema.Types.ObjectId,
             ref: 'User',

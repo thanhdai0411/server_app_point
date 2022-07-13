@@ -11,7 +11,7 @@ const giftSchema = new Schema(
         deadline: String,
         description: String,
         number_point_buy: {
-            type: String,
+            type: Number,
             required: true,
         },
         type_gift: String,
@@ -19,7 +19,7 @@ const giftSchema = new Schema(
             type: String,
             required: true,
         },
-        number_count: String,
+        number_count: Number,
         manufactory: String,
         info_manufactory: String,
     },
