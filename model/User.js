@@ -32,10 +32,11 @@ const userSchema = new Schema(
             type: Number,
             default: 0,
         },
-        total_number_point: {
+        number_point_transfer: {
             type: Number,
             default: 0,
         },
+
         avatar: String,
         wall: String,
         image: {
