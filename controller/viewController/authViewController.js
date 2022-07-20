@@ -4,6 +4,9 @@ const bcrypt = require('bcryptjs');
 
 const salt = bcrypt.genSaltSync(10);
 
+const generateToken = (key, valueEncode) =>
+    jwt.sign({ [key]: valueEncode }, process.env.ACCESS_TOKEN_SECRET);
+
 const authViewController = {
     pageRedirect: (req, res) => {
         if (req.cookies.token) {
@@ -30,11 +33,9 @@ const authViewController = {
             const newAdmin = new Admin({ username, password: hashPassword });
             const saveAdmin = await newAdmin.save();
 
-            var accessToken = jwt.sign(
-                { adminId: saveAdmin._id },
-                process.env.ACCESS_TOKEN_SECRET
-            );
-            res.cookie('token', accessToken);
+            var accessToken = generateToken('adminId', saveAdmin._id);
+
+            res.cookie('token', accessToken, { maxAge: 1000 * 3600 * 24 * 30 });
             res.cookie('username', saveAdmin.username);
             res.redirect('/view/user');
         } catch (err) {
@@ -61,11 +62,9 @@ const authViewController = {
             }
             const encode = bcrypt.compareSync(password, admin.password);
             if (encode) {
-                var accessToken = jwt.sign(
-                    { adminId: admin._id },
-                    process.env.ACCESS_TOKEN_SECRET
-                );
-                res.cookie('token', accessToken);
+                var accessToken = generateToken('adminId', saveAdmin._id);
+
+                res.cookie('token', accessToken, { maxAge: 1000 * 3600 * 24 * 30 });
                 res.cookie('username', admin.username);
             } else {
                 return res.render('pages/fail', {
@@ -93,6 +92,33 @@ const authViewController = {
     getAllUserLogin: async (req, res) => {
         const users = await Admin.find();
         res.json(users);
+    },
+    //
+    checkPermission: async (req, res) => {
+        try {
+            const { _id, username } = req.user;
+            if (req.isAuthenticated()) {
+                //  find Roles and check role user and redirect here
+                var accessToken = generateToken('adminId', _id, {
+                    maxAge: 1000 * 3600 * 24 * 30,
+                });
+                res.cookie('token', accessToken);
+                res.cookie('username', username);
+
+                res.redirect('/view/user');
+            }
+        } catch (err) {
+            res.render('pages/fail', { message: err.message });
+        }
+    },
+
+    loginJwtRoles: (req, res) => {
+        const { username, password } = req.body;
+
+        res.json({
+            token: 'JWT ' + generateToken('userName', username),
+            user: req.body,
+        });
     },
 };
 

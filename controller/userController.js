@@ -46,6 +46,8 @@ const userController = {
         try {
             const user = await User.findById({ _id: req.params.id })
                 .populate('history_point')
+                .populate('game')
+                .populate('info_dealer')
                 .populate('info_bank');
 
             res.json({
@@ -62,7 +64,9 @@ const userController = {
                 phone_number: req.params.phone_number,
             })
                 .populate('history_point')
-                .populate('info_bank');
+                .populate('game')
+                .populate('info_bank')
+                .populate('info_dealer');
             res.json({ success: true, data: user });
         } catch (err) {
             res.status(500).json({ success: false, message: 'Internal Server Error' });
@@ -71,6 +75,19 @@ const userController = {
     updateUser: async (req, res) => {
         try {
             const user = await User.findByIdAndUpdate({ _id: req.params.id }, req.body);
+            res.json({ success: true, message: 'Update user success' });
+        } catch (err) {
+            res.status(500).json({ success: false, message: 'Internal Server Error' });
+        }
+    },
+    countNumberPointUserByPhone: async (req, res) => {
+        const { amount_plus, phone_number } = req.body;
+
+        try {
+            const user = await User.findOneAndUpdate(
+                { phone_number },
+                { $inc: { number_point: amount_plus } }
+            );
             res.json({ success: true, message: 'Update user success' });
         } catch (err) {
             res.status(500).json({ success: false, message: 'Internal Server Error' });
@@ -115,14 +132,20 @@ const userController = {
     updateUserByID: async (req, res) => {
         const { number_point } = req.body;
         try {
-            await User.findByIdAndUpdate({ _id: req.params.id }, req.body);
+            const user = await User.findByIdAndUpdate({ _id: req.params.id }, req.body, {
+                new: true,
+            });
             // await HistoryPoint.findByIdAndUpdate(
             //     { user_id: req.params.id },
             //     {
             //         $push: { accumulate_point: number_point },
             //     }
             // );
-            res.json({ success: true, message: 'Update number point success' });
+            res.json({
+                success: true,
+                message: 'Update number point success',
+                data: user,
+            });
         } catch (err) {
             res.status(500).json({ success: false, message: 'Internal Server Error' });
         }

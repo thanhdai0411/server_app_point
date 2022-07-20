@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const transferSchema = new Schema(
     {
-        idUserFrom: {
+        toUserPhone: {
             type: String,
             require: true,
         },

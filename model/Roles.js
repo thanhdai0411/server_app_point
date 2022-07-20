@@ -4,6 +4,11 @@ const { Schema } = mongoose;
 
 const roleSchema = new Schema(
     {
+        // role: {
+        //     type: String,
+        //     enum: ['reader', 'creator', 'editor'],
+        //     default: 'reader',
+        // },
         role_name: {
             type: String,
             required: true,

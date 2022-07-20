@@ -45,6 +45,7 @@
                     <tr>
                         <th scope="col">STT</th>
                         <th scope="col">Tên</th>
+                        <th scope="col">Quyền</th>
                         <th scope="col">Số điện thoại</th>
                         <th scope="col">Người giới thiệu</th>
                         <th scope="col">Email</th>
@@ -58,6 +59,7 @@
                     <tr class="">
                         <th scope="row"><%= index+1 %></th>
                         <td><%= user.username %></td>
+                        <td><%= user.role %></td>
                         <td><%= user.phone_number %></td>
                         <td><%= user.number_phone_presenter %></td>
                         <td><%= user.email %></td>
@@ -66,6 +68,15 @@
                             <a class="btn btn-primary" href="/view/user/<%= user._id %> ">
                                 Chi tiết
                             </a>
+
+                            <a
+                                class="btn btn-success"
+                                id="btn-confirm-role"
+                                data-bs-toggle="modal"
+                                data-bs-target="#roleModal"
+                                data-id="<%= user._id %>"
+                                >Quyền</a
+                            >
                             <a
                                 class="btn btn-danger"
                                 id="btn-delete-user"
@@ -122,6 +133,62 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- modal role -->
+                            <div
+                                class="modal fade"
+                                id="roleModal"
+                                tabindex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                            >
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5
+                                                class="modal-title"
+                                                id="exampleModalLabel"
+                                            >
+                                                Phân quyền cho người dùng
+                                            </h5>
+                                            <button
+                                                type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                            ></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form name="role_form" method="POST">
+                                                <select
+                                                    class="form-select"
+                                                    aria-label="Default select example"
+                                                    name="role"
+                                                >
+                                                    <option value="User">User</option>
+                                                    <option value="Dealer">Dealer</option>
+                                                </select>
+                                                <div class="modal-footer">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary"
+                                                        data-bs-dismiss="modal"
+                                                    >
+                                                        Close
+                                                    </button>
+                                                    <button
+                                                        type="submit"
+                                                        id="btn_confirm_role"
+                                                        class="btn btn-primary"
+                                                    >
+                                                        Xác nhận
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <% }) %> <% } %>
@@ -133,10 +200,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <h3 class="text-center my-4">Không có người dùng trong hệ thống</h3>
                 <div style="position: relative">
-                    <a
-                        href="/view/trash/user"
-                        class="d-flex align-items-center text-danger"
-                    >
+                    <a class="d-flex align-items-center text-danger">
                         <span>Người dùng bị xóa</span>
                         <i class="bi bi-trash text-dark ms-2" style="font-size: 25px"></i>
                     </a>
@@ -175,15 +239,37 @@
             const buttonConfirmDeleteUser = document.querySelectorAll(
                 '#button-confirm-delete_user'
             );
+
             let idUser;
             confirmDeleteModal.addEventListener('show.bs.modal', (event) => {
                 const button = event.relatedTarget;
                 idUser = button.getAttribute('data-id');
+                console.log(idUser);
             });
             buttonConfirmDeleteUser.forEach((btnDelete) => {
                 btnDelete.onclick = (e) => {
                     deleteForm.action = `/view/user/trash/${idUser}/delete?_method=DELETE`;
                     deleteForm.submit();
+                };
+            });
+
+            // role
+
+            const roleModal = document.getElementById('roleModal');
+            const roleForm = document.forms['role_form'];
+            const btnConfirmRole = document.querySelectorAll('#btn_confirm_role');
+
+            let idRole;
+            roleModal.addEventListener('show.bs.modal', (event) => {
+                const button = event.relatedTarget;
+                idRole = button.getAttribute('data-id');
+                console.log(idRole);
+            });
+
+            btnConfirmRole.forEach((btn) => {
+                btn.onclick = (e) => {
+                    roleForm.action = `/view/user/role/${idRole}?_method=PATCH`;
+                    roleForm.submit();
                 };
             });
         </script>

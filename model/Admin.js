@@ -10,6 +10,11 @@ const adminSchema = new Schema(
             unique: true,
         },
         password: String,
+        // role: {
+        //     type: String,
+        //     enum: ['reader', 'creator', 'editor'],
+        //     default: 'reader',
+        // },
     },
     { timestamps: true }
 );

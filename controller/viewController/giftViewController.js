@@ -54,7 +54,16 @@ const giftViewController = {
     },
     updateGift: async (req, res) => {
         try {
-            await Gift.findByIdAndUpdate({ _id: req.params.id }, req.body);
+            if (req.file) {
+                let imgUrl;
+                imgUrl = `${process.env.URL}/api/file/get/${req.file.filename}`;
+                await Gift.findByIdAndUpdate(
+                    { _id: req.params.id },
+                    { ...req.body, image: imgUrl }
+                );
+            } else {
+                await Gift.findByIdAndUpdate({ _id: req.params.id }, req.body);
+            }
             res.redirect('/view/gift/get');
         } catch (err) {
             res.render('pages/fail', { message: err.message });

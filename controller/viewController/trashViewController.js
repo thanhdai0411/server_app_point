@@ -1,9 +1,11 @@
 const User = require('../../model/User');
+const Game = require('../../model/Game');
 
 const trashViewController = {
     deleteUser: async (req, res) => {
         try {
-            await User.delete({ _id: req.params.id });
+            const user = await User.delete({ _id: req.params.id });
+
             res.redirect('/view/user');
         } catch (err) {
             console.log(err.message);
@@ -19,6 +21,8 @@ const trashViewController = {
     },
     deleteForeverUser: async (req, res) => {
         try {
+            const user = await User.findById({ _id: req.params.id });
+            await Game.findByIdAndDelete({ _id: user.game._id });
             await User.findByIdAndDelete({ _id: req.params.id });
             res.redirect('/view/trash/user');
         } catch (err) {

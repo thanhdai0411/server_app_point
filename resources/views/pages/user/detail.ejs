@@ -23,6 +23,10 @@
                     <p style="margin: 0"><%= user.username %></p>
                 </div>
                 <div class="" style="border-bottom: 1.5px solid #eee; margin-top: 10px">
+                    <p style="font-weight: 600; margin-bottom: 10px">Quyền hạn</p>
+                    <p style="margin: 0"><%= user.role %></p>
+                </div>
+                <div class="" style="border-bottom: 1.5px solid #eee; margin-top: 10px">
                     <p style="font-weight: 600; margin-bottom: 10px">Số điện thoại</p>
                     <p style="margin: 0"><%= user.phone_number %></p>
                 </div>
@@ -86,6 +90,60 @@
                     </p>
                     <% } else { %>
                     <p>Chưa cập nhật thông tin ngân hàng</p>
+                    <% } %>
+                </div>
+                <div class="" style="border-bottom: 1.5px solid #eee; margin-top: 10px">
+                    <p style="font-weight: 600; margin-bottom: 10px">Thông tin đại lý</p>
+                    <% if (user.info_dealer) { %>
+
+                    <p style="margin-bottom: 6px">
+                        Chủ đại lý: <%= user.info_dealer.dealer_name %>
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Tên đại lý: <%= user.info_dealer.shop_name %>
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Email: <%= user.info_dealer.dealer_email %>
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Địa chỉ: <%= user.info_dealer.ward %>, <%=
+                        user.info_dealer.district %>, <%= user.info_dealer.province %>
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Địa chỉ cụ thể: <%= user.info_dealer.address %>
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Hình đại diện đại lý:
+                        <br />
+                        <img
+                            src="<%= user.info_dealer.imageAvatar %>"
+                            width="300"
+                            height="300"
+                            alt=""
+                        />
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Đăng kí kinh doanh:
+                        <br />
+                        <img
+                            src="<%= user.info_dealer.imageBusiness %>"
+                            width="300"
+                            height="300"
+                            alt=""
+                        />
+                    </p>
+                    <p style="margin-bottom: 6px">
+                        Chứng minh nhân dân:
+                        <br />
+                        <img
+                            src="<%= user.info_dealer.imageCMND %>"
+                            width="300"
+                            height="300"
+                            alt=""
+                        />
+                    </p>
+                    <% } else { %>
+                    <p>Chưa có đăng kí làm đại lý</p>
                     <% } %>
                 </div>
             </div>

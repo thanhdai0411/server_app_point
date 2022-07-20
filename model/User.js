@@ -47,9 +47,14 @@ const userSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Discount',
         },
-        role_id: {
-            type: Schema.Types.ObjectId,
-            ref: 'Role',
+        // role_id: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'Role',
+        // },
+        role: {
+            type: String,
+            enum: ['User', 'Dealer', 'Admin'],
+            default: 'User',
         },
         rank_id: {
             type: Schema.Types.ObjectId,
@@ -58,6 +63,10 @@ const userSchema = new Schema(
         info_bank: {
             type: Schema.Types.ObjectId,
             ref: 'InfoBank',
+        },
+        info_dealer: {
+            type: Schema.Types.ObjectId,
+            ref: 'InfoDealer',
         },
         points: [
             {
@@ -71,13 +80,17 @@ const userSchema = new Schema(
                 ref: 'HistoryPoint',
             },
         ],
+        game: {
+            type: Schema.Types.ObjectId,
+            ref: 'Game',
+        },
     },
     { timestamps: true }
 );
 
 userSchema.plugin(mongoose_delete, {
     deletedAt: true,
-    overrideMethods: ['count', 'find', 'findOneAndUpdate', 'update'],
+    overrideMethods: ['count', 'find', 'findOneAndUpdate', 'update', 'findOne'],
 });
 
 const User = mongoose.model('User', userSchema);

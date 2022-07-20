@@ -8,7 +8,9 @@ const sendEmailRoute = require('./sendEmailRoute');
 const giftRoute = require('./giftRoute');
 const marketingRouter = require('./marketingRoute');
 const pointSettingRoute = require('./pointSettingRoute');
-const transferMoneyRoute = require('./transferMoneyRoute');
+const transactionRoute = require('./transactionRoute');
+const gameRoute = require('./gameRoute');
+const infoDealerRoute = require('./infoDealerRoute');
 
 //view
 
@@ -25,7 +27,9 @@ const routerConfig = (app) => {
     app.use('/api/marketing', marketingRouter);
     app.use('/api/send_email', sendEmailRoute);
     app.use('/api/point_setting', pointSettingRoute);
-    app.use('/api/transfer', transferMoneyRoute);
+    app.use('/api/transfer', transactionRoute);
+    app.use('/api/game', gameRoute);
+    app.use('/api/dealer', infoDealerRoute);
 
     app.use('/view', viewRoute);
     app.use('/', viewRoute);

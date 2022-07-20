@@ -13,9 +13,21 @@ const managerUserViewController = {
     getUser: async (req, res) => {
         try {
             const user = await User.findById({ _id: req.params.id })
+                .populate('history_point')
+                .populate('game')
                 .populate('info_bank')
-                .populate('history_point');
+                .populate('info_dealer');
+
             res.render('pages/user/detail', { user });
+        } catch (err) {
+            console.log(err.message);
+        }
+    },
+    roleUser: async (req, res) => {
+        const { role } = req.body;
+        try {
+            await User.findByIdAndUpdate({ _id: req.params.id }, { role });
+            res.redirect('/view/user');
         } catch (err) {
             console.log(err.message);
         }
