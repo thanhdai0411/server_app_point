@@ -9,7 +9,7 @@ const pointSchema = new Schema(
             required: true,
             unique: true,
         },
-        number_point: { type: String },
+        number_point: { type: Number },
         userID: {
             type: Schema.Types.ObjectId,
             ref: 'User',

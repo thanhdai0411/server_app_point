@@ -1,16 +1,23 @@
-const emailServices = require('../services/emailSevices');
+const emailGiftServices = require('../services/emailGiftServices');
 
 const sendMailController = {
-    sendMail: async (req, res) => {
-        console.log(req.body);
-        const { email, user_name, name_bank, branch_bank, account_number } = req.body;
+    sendExchangeGiftMail: async (req, res) => {
+        const { email, phone_number, username, info_bank, info_gift_exchange } = req.body;
+        const { name_bank, branch_bank, name_account, account_number } = info_bank;
+        const { name: name_gift, point, amount_exchange } = info_gift_exchange;
+
         try {
-            await emailServices({
-                receiverEmail: email,
-                user_name,
+            await emailGiftServices({
+                email,
+                username,
+                phone_number,
                 name_bank,
                 branch_bank,
+                name_account,
                 account_number,
+                name_gift,
+                point,
+                amount_exchange,
             });
             res.json({ success: true, message: 'Send mail success' });
         } catch (err) {

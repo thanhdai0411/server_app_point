@@ -4,21 +4,21 @@ const User = require('../model/User');
 const gameController = {
     incAmountSpin: async (req, res) => {
         const { phone_number } = req.body;
+        console.log({ phone_number });
         try {
             if (!phone_number) {
                 return res
                     .status(404)
                     .json({ success: false, message: 'Missing number phone' });
             }
-            const amount = new Game(req.body);
-            await amount.save();
-
             const user = await User.findOne({ phone_number: phone_number });
             if (!user) {
                 return res
                     .status(404)
                     .json({ success: false, message: 'Phone number error' });
             }
+            const amount = new Game(req.body);
+            await amount.save();
 
             await user.updateOne({ game: amount._id });
 

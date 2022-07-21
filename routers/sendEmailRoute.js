@@ -1,6 +1,9 @@
 const router = require('express').Router();
-const { sendMail } = require('../controller/sendMailController');
+const {
+    sendExchangeGiftMail,
+    sendMailConfirm,
+} = require('../controller/sendMailController');
 
-router.post('/', sendMail);
+router.post('/exchange_gift', sendExchangeGiftMail);
 
 module.exports = router;

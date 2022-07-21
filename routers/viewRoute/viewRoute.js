@@ -43,6 +43,8 @@ const {
     settingPoint,
     addSetting,
     deleteSettingPoint,
+    updateSetting,
+    pageEditPointSetting,
 } = require('../../controller/viewController/pointViewController');
 
 //! Gift
@@ -88,6 +90,8 @@ router.get('/get/user/login', getUserLogin);
 router.get('/point', pointPage);
 router.get('/point/get', getSettingPoint);
 router.post('/point/add', addSetting);
+router.put('/point/edit/:id', updateSetting);
+router.get('/point/page-edit/:id', pageEditPointSetting);
 router.delete('/point/delete/:id', deleteSettingPoint);
 
 //!gift
@@ -116,5 +120,9 @@ router.delete('/user/trash/:id/delete-forever', auth, deleteForeverUser);
 router.patch('/user/trash/:id/restore', auth, restoreUser);
 // router.patch('/user/trash/:id/restore-all', restoreAllUser);
 router.get('/trash/user', auth, getUserTrash);
+
+//!thanks
+
+// router.get('/trash/user', auth, getUserTrash);
 
 module.exports = router;

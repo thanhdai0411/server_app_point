@@ -16,6 +16,7 @@ const emailRegisterDealerServices = async (data) => {
         dealer_name,
         district,
         product_business,
+        dealer_phone_number,
         province,
         shop_name,
         ward,
@@ -27,6 +28,7 @@ const emailRegisterDealerServices = async (data) => {
 
     console.log({
         dealer_email,
+        dealer_phone_number,
         dealer_name,
         district,
         product_business,
@@ -38,43 +40,49 @@ const emailRegisterDealerServices = async (data) => {
         imageBusiness,
         imageCMND,
     });
+
     let info = await transporter.sendMail({
-        from: '"Ban quản trị Awaco Group" <ngothanhdai123@gmail.com>', // sender address
-        to: receiverEmail, // list of receivers
+        from: `"Ban quản trị Awaco Group" <ngothanhdai123@gmail.com>`, // sender address
+        to: dealer_email, // list of receivers
         subject: 'Thông tin đăng kí làm đại lý', // Subject line
+        replyTo: 'ngothanhdai123@gmail.com',
         html: `
-            <h2>Xin chào! ${user_name}</h2>
-            <p>Bạn nhận được email này vì bạn đã đăng kí thành công làm đại lý</p>
-            <div>Thông tin đại lý bạn đã đăng kí:</div>
+            <h2>Xin chào! ${dealer_name}</h2>
+            <p style="font-size: 17px;">Bạn nhận được email này vì bạn đã đăng kí thành công làm đại lý độc quyền của Awaco</p>
+            <div style="font-size: 17px;">Thông tin đại lý bạn đã đăng kí:</div>
 
-	        <ul style="line-height: 25px">
-               
-                <li>Người đăng kí:<b> ${name_bank}</b></li>	
-                <li>Sản phẩn kinh doanh: <b>${branch_bank}</b></li>	
-                <li>Tên đại lý: <b>${account_number}</b></li>	
-                <li>Địa chỉ: <b>${account_number}</b></li>	
-                <li>Địa chỉ cụ thể: <b>${account_number}</b></li>
-                <li>Hình đại diện cho đại lý:
-                	<br/>
-                	<img src="https://picsum.photos/200" alt="" width=200 height=200 />
-
-                </li>
-                <li>Đăng kí kinh doanh:
-                	<br/>
-                	<img src="https://picsum.photos/200" alt="" width=200 height=200 />
-
-                </li>
-                <li>Chứng minh nhân dân:
-                	<br/>
-                	<img src="https://picsum.photos/200" alt="" width=200 height=200 />
-
-                </li>
+	        <ul style="line-height: 25px ; font-size: 17px ;">
+    
+                <li>Người đăng kí:<b> ${dealer_name}</b></li>	
+                <li>Số điện thoại:<b> ${dealer_phone_number}</b></li>	
+                <li>Sản phẩn kinh doanh: <b>${product_business}</b></li>	
+                <li>Tên đại lý: <b>${shop_name}</b></li>	
+                <li>Địa chỉ: <b>${ward}, ${district}, ${province}</b></li>	
+                <li>Địa chỉ cụ thể: <b>${address}</b></li>
+                
             </ul>
-            <p>Nếu các thông tin trên là đúng,vui lòng click vào đường link bên dưới để xác nhận</p>
-            <a href="http://localhost:8888/view/gift/get" target="_blank">Nhập vào đây</a>
-            <p>Awaco ! Xin chân thành cảm ơn </p>
+            <h3 style="font-size: 17px ; ">Vui lòng nhấn vào nút <b style="color: red;">Trả lời</b> ở bên dưới và gõ <b style="color: red;">Xác nhận</b> để hoàn thành thủ tục đăng kí. Bạn hãy thường xuyển kiểm tra cuộc trò chuyện này. Chùng tôi sẽ liên hệ sớm nhất tới bạn</h3>
+        
+            <p style="font-size: 18px;">Awaco! Xin chân thành cảm ơn </p>
 
         `,
+        attachments: [
+            {
+                filename: 'chứng_minh_nhân_dân.png',
+                path: imageCMND,
+                cid: 'unique@kreata.ee', //same cid value as in the html img src
+            },
+            {
+                filename: 'đăng_kí_kinh_doanh.png',
+                path: imageBusiness,
+                cid: 'unique@kreata.ee', //same cid value as in the html img src
+            },
+            {
+                filename: 'hình_đại_diện.png',
+                path: imageAvatar,
+                cid: 'unique@kreata.ee', //same cid value as in the html img src
+            },
+        ],
     });
 };
 

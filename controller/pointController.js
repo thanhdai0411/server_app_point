@@ -1,32 +1,75 @@
 const Point = require('../model/Points');
 const User = require('../model/User');
 const HistoryPoint = require('../model/HistoryPoint');
+const SettingPoint = require('../model/SettingPoint');
 
 const pointController = {
     addPoints: async (req, res) => {
-        const { userID, code_scanner } = req.body;
+        const { userID, code_scanner, phoneUserIntroduce, prefix_scan } = req.body;
         try {
             const exitsPoint = await Point.findOne({ code_scanner });
+
             if (exitsPoint) {
                 return res.json({
                     success: false,
-                    message: 'Code scanner already exist',
+                    message: 'Mã đã qua sử dụng',
                 });
             }
 
-            const newPoint = new Point(req.body);
-            const savePoint = await newPoint.save();
+            const prefixQR = await SettingPoint.findOne({ prefix: prefix_scan });
 
-            // update user
-            if (userID) {
-                const user = User.findOne({ _id: userID });
+            const { number_point_user, number_point_intro, type } = prefixQR;
 
-                await user.updateOne({ $push: { points: savePoint.code_scanner } });
+            const userScan = await User.findById({ _id: userID });
+
+            if (type === userScan.role) {
+                await userScan.updateOne({ $inc: { number_point: number_point_user } });
+            } else {
+                return res.json({
+                    success: false,
+                    message: 'Bạn không có quyền quét mã QRcode này',
+                });
             }
 
-            res.json({ success: true, data: savePoint });
+            if (phoneUserIntroduce) {
+                await User.findOneAndUpdate(
+                    {
+                        phone_number: phoneUserIntroduce,
+                    },
+                    {
+                        $inc: {
+                            number_point_introduce: number_point_intro,
+                            number_point: number_point_intro,
+                        },
+                    }
+                );
+            }
+
+            const newPoint = new Point({ code_scanner });
+            await newPoint.save();
+
+            if (phoneUserIntroduce) {
+                res.json({
+                    success: true,
+                    user: 'both',
+                    point: {
+                        user: number_point_user,
+                        introducer: number_point_intro,
+                    },
+                    message: `Quét mã tích điểm thành công bạn được cộng ${number_point_user}đ. Bạn của bạn được cộng ${number_point_intro}`,
+                });
+            } else {
+                res.json({
+                    success: true,
+                    user: 'only',
+                    point: {
+                        user: number_point_user,
+                    },
+                    message: `Quét mã tích điểm thành công bạn được cộng ${number_point_user}đ`,
+                });
+            }
         } catch (err) {
-            res.status(500).json({ success: false, message: 'Internal Server Error' });
+            res.status(500).json({ success: false, message: err.message });
         }
     },
 

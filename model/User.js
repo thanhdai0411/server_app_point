@@ -53,7 +53,7 @@ const userSchema = new Schema(
         // },
         role: {
             type: String,
-            enum: ['User', 'Dealer', 'Admin'],
+            enum: ['User', 'Dealer'],
             default: 'User',
         },
         rank_id: {

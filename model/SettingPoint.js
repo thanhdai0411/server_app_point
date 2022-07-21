@@ -9,12 +9,17 @@ const settingPointSchema = new Schema(
             require: true,
         },
         number_point_user: {
-            type: String,
+            type: Number,
             require: true,
         },
         number_point_intro: {
-            type: String,
+            type: Number,
             require: true,
+        },
+        type: {
+            type: String,
+            enum: ['User', 'Dealer'],
+            default: 'User',
         },
     },
     { timestamps: true }

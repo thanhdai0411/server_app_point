@@ -9,6 +9,7 @@
             <div class="row">
                 <div
                     class="col-lg-3 d-flex flex-column flex-shrink-0 p-3 bg-light border-end"
+                    style="height: 100vh"
                 >
                     <a
                         href="/view/point"
@@ -21,7 +22,7 @@
                         <li class="nav-item">
                             <a
                                 href="/view/point/get"
-                                class="nav-link text-dark"
+                                class="nav-link active"
                                 id="nav-link-sidebar"
                                 aria-current="page"
                             >
@@ -35,7 +36,7 @@
                         <li>
                             <a
                                 href="/view/gift/get"
-                                class="nav-link active"
+                                class="nav-link text-dark"
                                 id="nav-link-sidebar"
                             >
                                 <i
@@ -50,101 +51,71 @@
                 <div class="col-lg-9">
                     <form
                         class="mx-auto"
-                        style="width: 90%; margin-bottom: 50px"
+                        style="width: 90%"
                         method="post"
-                        action="/view/gift/update/<%= gift._id %>?_method=PUT"
-                        enctype="multipart/form-data"
+                        action="/view/point/edit/<%= stPoint._id %>?_method=PUT"
                     >
                         <div class="d-flex justify-content-between align-items-center">
-                            <h3 class="text-center my-4">Chỉnh sửa quà đổi điểm</h3>
-                            <a class="btn btn-warning" href="/view/gift/get"
-                                >Phần quà hiện có</a
+                            <h3 class="text-center my-4">Chỉnh sửa cài đặt số điểm</h3>
+                            <a class="btn btn-warning" href="/view/point/get"
+                                >Điểm đã cài</a
                             >
                         </div>
                         <div class="mb-3">
-                            <label for="title" class="form-label">Tiêu đề</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="title"
-                                name="title"
-                                value="<%= gift.title %>"
-                            />
-                        </div>
-                        <div class="mb-3">
-                            <label for="number_point_buy" class="form-label"
-                                >Số điểm cần để đổi</label
+                            <label for="prefix-point" class="form-label"
+                                >Tiền tố QRCode</label
                             >
                             <input
                                 type="text"
                                 class="form-control"
-                                id="number_point_buy"
-                                name="number_point_buy"
-                                value="<%= gift.number_point_buy %>"
+                                id="prefix-point"
+                                name="prefix"
+                                value="<%= stPoint.prefix %> "
+                                placeholder="AWACOxxxx"
                             />
                         </div>
                         <div class="mb-3">
-                            <label for="type_gift" class="form-label">Loại quà</label>
+                            <label for="prefix-point" class="form-label"
+                                >QRCode cho người dùng</label
+                            >
                             <select
                                 class="form-select"
-                                name="type_gift"
                                 aria-label="Default select example"
-                                value="<%= gift.type_gift %>"
+                                name="type"
                             >
-                                <option >Open this select menu</option>
-                                <option <% if (gift.type_gift == "quà") { %>
+                                <option <% if (stPoint.type == "User") { %>
                                     selected
-                                <% } %> value="quà">Đổi điểm thành quà</option>
-                                <option <% if (gift.type_gift == "tiền") { %>
+                                <% } %> value="User">User</option>
+                                <option <% if (stPoint.type == "Dealer") { %>
                                     selected
-                                <% } %> value="tiền">Đổi điểm thành tiền</option>
+                                <% } %>  value="Dealer">Dealer</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label"
-                                >Miêu tả sản phẩm</label
-                            >
-                            <textarea
-                                class="form-control"
-                                id="description"
-                                name="description"
-                                rows="5"
-                            >
-<%= gift.description %></textarea
-                            >
-                        </div>
-                        <div class="mb-3">
-                            <label for="deadline" class="form-label">Hạn đổi quà</label>
-                            <input
-                                type="date"
-                                class="form-control"
-                                id="deadline"
-                                name="deadline"
-                                value="<%= gift.deadline %>"
-                            />
-                        </div>
-                        <div class="mb-3">
-                            <label for="number_count" class="form-label"
-                                >Số quà hiện có</label
+                            <label for="number_point_user" class="form-label"
+                                >Số điểm cộng cho người quét</label
                             >
                             <input
                                 type="text"
                                 class="form-control"
-                                id="number_count"
-                                name="number_count"
-                                value="<%= gift.number_count %> "
+                                id="number_point_user"
+                                name="number_point_user"
+                                value="<%= stPoint.number_point_user%> "
                             />
                         </div>
                         <div class="mb-3">
-                            <label for="image" class="form-label">Hình minh họa</label>
+                            <label for="number_point_intro" class="form-label"
+                                >Số điểm cộng cho người giới thiệu</label
+                            >
                             <input
-                                type="file"
+                                type="text"
                                 class="form-control"
-                                id="image"
-                                name="image"
+                                id="number_point_intro"
+                                name="number_point_intro"
+                                value="<%= stPoint.number_point_intro%> "
+
                             />
                         </div>
-
                         <div class="col-auto">
                             <button type="submit" class="btn btn-primary mb-3">
                                 Xác nhận

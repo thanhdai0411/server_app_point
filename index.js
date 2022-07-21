@@ -51,15 +51,6 @@ passport.use(checkUserPassPort);
 //! config router
 routerConfig(app);
 
-// io.on('connection', (client) => {
-//     client.on('event', (data) => {
-//         console.log({ socket: data });
-//     });
-//     client.on('disconnect', () => {
-//         /* … */
-//     });
-// });
-
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });

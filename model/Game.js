@@ -26,9 +26,6 @@ const gameSchema = new Schema(
 
         phone_number: {
             type: String,
-            require: true,
-            unique: true,
-            ref: 'User',
         },
     },
     { timestamps: true }

@@ -7,6 +7,9 @@ const InfoDealerSchema = new Schema(
         dealer_name: {
             type: String,
         },
+        dealer_phone_number: {
+            type: String,
+        },
         shop_name: {
             type: String,
         },

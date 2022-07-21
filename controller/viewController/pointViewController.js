@@ -36,6 +36,22 @@ const pointViewController = {
             res.render('pages/fail', { message: err.message });
         }
     },
+    pageEditPointSetting: async (req, res) => {
+        try {
+            const settingP = await SettingPoint.findById({ _id: req.params.id });
+            res.render('pages/point/edit_point', { stPoint: settingP });
+        } catch (err) {
+            res.render('pages/fail', { message: err.message });
+        }
+    },
+    updateSetting: async (req, res) => {
+        try {
+            await SettingPoint.findByIdAndUpdate({ _id: req.params.id }, req.body);
+            res.redirect('/view/point/get');
+        } catch (err) {
+            res.render('pages/fail', { message: err.message });
+        }
+    },
     deleteSettingPoint: async (req, res) => {
         try {
             await SettingPoint.findByIdAndDelete({ _id: req.params.id });

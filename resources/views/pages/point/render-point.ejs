@@ -3,6 +3,7 @@
     <head>
         <%- include('../../partials/head.ejs') %>
     </head>
+
     <body>
         <%- include('../../partials/header.ejs') %>
         <div class="container-fluid">
@@ -53,24 +54,26 @@
                     <h3 class="text-center my-4">
                         Bảng điểm tương ứng với mã đã cài đặt
                     </h3>
-                    <div style="width: 90%" class="mx-auto">
+                    <div style="width: 98%" class="mx-auto">
                         <table class="table table-bordered">
                             <thead class="text-center">
                                 <tr>
                                     <th scope="col">STT</th>
                                     <th scope="col">Tiền tố</th>
-                                    <th scope="col">Số điểm cộng cho người quét</th>
-                                    <th scope="col">Số điểm cộng cho người giới thiệu</th>
+                                    <th scope="col">Người dùng</th>
+                                    <th scope="col">Điểm người quét</th>
+                                    <th scope="col">Điểm người giới thiệu</th>
                                     <th scope="col">Hành động</th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider text-center">
-                                <% if (setting) { %> <% setting.forEach((point,index) => {
+                                <% if (setting) { %> <% setting.forEach((point,index)=> {
                                 %>
 
                                 <tr class="">
                                     <th scope="row"><%= index+1 %></th>
                                     <td><%= point.prefix %></td>
+                                    <td><%= point.type %></td>
                                     <td><%= point.number_point_user %></td>
                                     <td><%= point.number_point_intro %></td>
                                     <td>
@@ -81,6 +84,13 @@
                                             data-id="<%= point._id %>"
                                         >
                                             Xóa
+                                        </a>
+                                        <a
+                                            class="btn btn-primary"
+                                            id="btnEditQR"
+                                            href="/view/point/page-edit/<%= point._id%>"
+                                        >
+                                            Edit
                                         </a>
 
                                         <div
@@ -160,12 +170,43 @@
         confirmDeleteModal.addEventListener('show.bs.modal', (event) => {
             const button = event.relatedTarget;
             idUser = button.getAttribute('data-id');
+            console.log(idUser);
         });
         buttonConfirmDeleteSetting.forEach((btn) => {
             btn.onclick = () => {
                 deleteSettingForm.action = `/view/point/delete/${idUser}?_method=DELETE`;
                 deleteSettingForm.submit();
             };
+        });
+
+        // edit qr code
+        const btnEditModal = document.getElementById('btnEditQR');
+        const modalEdit = document.getElementById('editQRModal');
+
+        let id;
+
+        modalEdit.addEventListener('show.bs.modal', (event) => {
+            const button = event.relatedTarget;
+
+            id = button.getAttribute('data-id');
+            prefix = button.getAttribute('data-prefix');
+            type = button.getAttribute('data-type');
+            number_point_user = button.getAttribute('data-number_point_user');
+            number_point_intro = button.getAttribute('data-number_point_intro');
+
+            const prefixPoint = modalEdit.querySelector('#prefix-point');
+            const typePoint = modalEdit.querySelector('#type-point');
+            const user = modalEdit.querySelector('#number_point_user');
+            const introduce = modalEdit.querySelector('#number_point_intro');
+
+            console.log(typePoint);
+            typePoint.setAttribute('selected', '');
+            prefixPoint.value = prefix;
+            // typePoint.value = type
+            user.value = number_point_user;
+            introduce.value = number_point_intro;
+
+            console.log({ id, prefix, type, number_point_intro, number_point_user });
         });
     </script>
 </html>
