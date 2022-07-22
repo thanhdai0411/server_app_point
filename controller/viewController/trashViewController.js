@@ -20,9 +20,10 @@ const trashViewController = {
         }
     },
     deleteForeverUser: async (req, res) => {
+        console.log(req.params.id);
         try {
-            const user = await User.findById({ _id: req.params.id });
-            await Game.findByIdAndDelete({ _id: user.game._id });
+            const user = await User.findById({ _id: req.params.id }).populate('game');
+            if (user.game) await Game.findByIdAndDelete({ _id: user.game._id });
             await User.findByIdAndDelete({ _id: req.params.id });
             res.redirect('/view/trash/user');
         } catch (err) {

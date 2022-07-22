@@ -90,7 +90,7 @@ const userSchema = new Schema(
 
 userSchema.plugin(mongoose_delete, {
     deletedAt: true,
-    overrideMethods: ['count', 'find', 'findOneAndUpdate', 'update', 'findOne'],
+    overrideMethods: ['count', 'find', 'findOneAndUpdate', 'update'],
 });
 
 const User = mongoose.model('User', userSchema);

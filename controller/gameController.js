@@ -32,6 +32,7 @@ const gameController = {
             await Game.findByIdAndUpdate({ _id: req.params.id }, req.body);
             res.json({ success: true, message: 'update amount spin success' });
         } catch (err) {
+            console.log(err);
             res.status(500).json({ success: false, message: err.message });
         }
     },
@@ -43,6 +44,7 @@ const gameController = {
             );
             res.json({ success: true, message: 'update amount spin success' });
         } catch (err) {
+            console.log(err);
             res.status(500).json({ success: false, message: err.message });
         }
     },

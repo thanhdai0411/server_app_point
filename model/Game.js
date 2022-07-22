@@ -6,7 +6,8 @@ const gameSchema = new Schema(
     {
         amount: {
             type: Number,
-            default: 0,
+            default: 5,
+            unique: true,
         },
         price_amount: {
             type: Number,
